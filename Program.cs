@@ -2,8 +2,8 @@
 using System.Net.Http.Json;
 using Microsoft.Extensions.Configuration;
 using CustomVisionImageDownloader;
-// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+
+Console.WriteLine("Start downloading images");
 
 var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -24,7 +24,6 @@ if( trainingImageList is not null )
 {
     await Parallel.ForEachAsync(trainingImageList, new ParallelOptions{MaxDegreeOfParallelism = 5}, async (traingImage, token) =>
     {
-        //var image = await client.GetByteArrayAsync(traingImage.originalImageUri);
         var image = await client.GetStreamAsync(traingImage.originalImageUri,token);
         
         var imageName = traingImage.originalImageUri.Split('/').Last();
